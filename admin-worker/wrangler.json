@@ -1,0 +1,11 @@
+{
+  "name": "ereader-admin",
+  "main": "src/index.js",
+  "compatibility_date": "2024-12-01",
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "ereader-books"
+    }
+  ]
+}

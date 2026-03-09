@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { books, getBook } from '../books';
+import { getBooks, getBook } from '../books';
 import { getHistory } from '../readingHistory';
 import LazyBookCover from '../components/LazyBookCover';
 import Navbar from '../components/Navbar';
@@ -17,29 +17,30 @@ const CATEGORIES = [
   { key: 'lit', label: 'Literature', match: /poem|feminist|doom|dietland|intrusion|muscle|men explain|siutico/i, color: '#8B3A62' },
 ];
 
-// Count books per category
-const categoryCounts = (() => {
-  const counts = {};
-  CATEGORIES.forEach((c) => { counts[c.key] = 0; });
-  books.forEach((b) => {
-    for (const c of CATEGORIES) {
-      if (c.match.test(b.title)) { counts[c.key]++; break; }
-    }
-  });
-  return counts;
-})();
-
-const epubCount = books.filter((b) => b.type === 'epub').length;
-const pdfCount = books.filter((b) => b.type === 'pdf').length;
-
 function tooltip(book) {
   return book.author ? `${book.title}\nby ${book.author}` : book.title;
 }
 
 export default function Library() {
+  const books = getBooks();
   const [activeFilter, setActiveFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const { categoryCounts, epubCount, pdfCount } = useMemo(() => {
+    const counts = {};
+    CATEGORIES.forEach((c) => { counts[c.key] = 0; });
+    books.forEach((b) => {
+      for (const c of CATEGORIES) {
+        if (c.match.test(b.title)) { counts[c.key]++; break; }
+      }
+    });
+    return {
+      categoryCounts: counts,
+      epubCount: books.filter((b) => b.type === 'epub').length,
+      pdfCount: books.filter((b) => b.type === 'pdf').length,
+    };
+  }, [books]);
 
   const filtered = useMemo(() => {
     let list = books;
