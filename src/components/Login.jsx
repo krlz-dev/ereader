@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const VALID_USER = 'krlz';
-const VALID_PASS = '14A/T47na4#K';
+const VALID_USER = import.meta.env.VITE_AUTH_USER || '';
+const VALID_PASS = import.meta.env.VITE_AUTH_PASS || '';
 
 export function isAuthenticated() {
   return sessionStorage.getItem('ereader_auth') === 'true';
