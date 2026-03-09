@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ePub from 'epubjs';
+import { getBookUrl } from '../config';
 
 const coverCache = new Map();
 const failedCache = new Set();
@@ -24,7 +25,7 @@ function useBookCover(book) {
     async function extractCover() {
       try {
         if (book.type === 'epub') {
-          const epubBook = ePub(`/books/${encodeURIComponent(book.file)}`);
+          const epubBook = ePub(getBookUrl(book.file));
           const url = await epubBook.coverUrl();
           if (!cancelled && url) {
             coverCache.set(book.file, url);
@@ -39,7 +40,7 @@ function useBookCover(book) {
             import.meta.url
           ).toString();
 
-          const url = `/books/${encodeURIComponent(book.file)}`;
+          const url = getBookUrl(book.file);
           const pdf = await pdfjsLib.getDocument({ url, verbosity: 0 }).promise;
           const page = await pdf.getPage(1);
           const unscaled = page.getViewport({ scale: 1 });

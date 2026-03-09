@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getBook } from '../books';
+import { getBookUrl } from '../config';
 import { addToHistory } from '../readingHistory';
 import EpubReader from '../components/EpubReader';
 import PdfReader from '../components/PdfReader';
@@ -31,9 +32,9 @@ export default function Reader() {
 
       <div className="reader-container">
         {book.type === 'epub' ? (
-          <EpubReader file={`/books/${encodeURIComponent(book.file)}`} bookId={book.id} />
+          <EpubReader file={getBookUrl(book.file)} bookId={book.id} />
         ) : (
-          <PdfReader file={`/books/${encodeURIComponent(book.file)}`} bookId={book.id} />
+          <PdfReader file={getBookUrl(book.file)} bookId={book.id} />
         )}
       </div>
     </div>
