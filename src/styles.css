@@ -40,6 +40,85 @@ body {
 }
 
 
+.navbar .logout-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.navbar .logout-btn:hover {
+  color: #e63956;
+}
+
+.logout-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
+.logout-dialog {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 32px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.logout-dialog p {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #1a1a2e;
+}
+
+.logout-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.logout-actions button {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.logout-cancel {
+  background: #f2f1f6;
+  border: none;
+  color: #555;
+}
+
+.logout-cancel:hover {
+  background: #e8e7ed;
+}
+
+.logout-confirm {
+  background: #e63956;
+  border: none;
+  color: #fff;
+}
+
+.logout-confirm:hover {
+  background: #d12e4a;
+}
+
 /* ========== MAIN LAYOUT ========== */
 .main-layout {
   display: grid;
