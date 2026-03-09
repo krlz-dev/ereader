@@ -39,6 +39,7 @@ function tooltip(book) {
 export default function Library() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const filtered = useMemo(() => {
     let list = books;
@@ -71,11 +72,14 @@ export default function Library() {
 
   return (
     <>
-      <Navbar />
+      <Navbar onMenuClick={() => setDrawerOpen(true)} />
+
+      {/* Mobile drawer overlay */}
+      {drawerOpen && <div className="drawer-overlay" onClick={() => setDrawerOpen(false)} />}
 
       <div className="main-layout">
-        {/* Left sidebar */}
-        <aside className="sidebar">
+        {/* Left sidebar / mobile drawer */}
+        <aside className={`sidebar${drawerOpen ? ' drawer-open' : ''}`}>
           <div className="sidebar-inner">
             {/* Search */}
             <div className="sidebar-search">
@@ -99,7 +103,7 @@ export default function Library() {
             {/* Format filters */}
             <div
               className={`filter-item${activeFilter === 'all' ? ' active' : ''}`}
-              onClick={() => setActiveFilter('all')}
+              onClick={() => { setActiveFilter('all'); setDrawerOpen(false); }}
             >
               <div className="filter-dot" style={{ background: '#1a1a2e' }} />
               <span className="filter-label">All Books</span>
@@ -107,7 +111,7 @@ export default function Library() {
             </div>
             <div
               className={`filter-item${activeFilter === 'epub' ? ' active' : ''}`}
-              onClick={() => setActiveFilter('epub')}
+              onClick={() => { setActiveFilter('epub'); setDrawerOpen(false); }}
             >
               <div className="filter-dot" style={{ background: '#e63956' }} />
               <span className="filter-label">E-books</span>
@@ -115,7 +119,7 @@ export default function Library() {
             </div>
             <div
               className={`filter-item${activeFilter === 'pdf' ? ' active' : ''}`}
-              onClick={() => setActiveFilter('pdf')}
+              onClick={() => { setActiveFilter('pdf'); setDrawerOpen(false); }}
             >
               <div className="filter-dot" style={{ background: '#355070' }} />
               <span className="filter-label">PDF Books</span>
@@ -129,7 +133,7 @@ export default function Library() {
               <div
                 key={c.key}
                 className={`filter-item${activeFilter === c.key ? ' active' : ''}`}
-                onClick={() => setActiveFilter(c.key)}
+                onClick={() => { setActiveFilter(c.key); setDrawerOpen(false); }}
               >
                 <div className="filter-dot" style={{ background: c.color }} />
                 <span className="filter-label">{c.label}</span>
